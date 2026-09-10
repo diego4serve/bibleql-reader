@@ -1,0 +1,76 @@
+@use "../styles/tokens" as t;
+@use "../styles/mixins" as *;
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 19, 18, 0.42);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 40;
+}
+
+.dialog {
+  width: 100%;
+  max-width: 440px;
+  background: var(--raise);
+  border: 1px solid var(--divider);
+  border-radius: t.$radius-md;
+  box-shadow: var(--shadow-lg);
+  padding: 22px 24px;
+}
+
+.sectionTitle {
+  font-family: t.$font-heading;
+  font-size: 26px;
+  font-weight: 600;
+  margin: 0 0 6px;
+
+  &:not(:first-child) {
+    margin-top: 20px;
+  }
+}
+
+.help {
+  margin: 0 0 16px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--divider);
+  border-radius: t.$radius-md;
+  background: var(--bg);
+  font-family: t.$font-mono;
+  font-size: 13px;
+  outline: none;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.cancelButton {
+  padding: 6px 14px;
+  border: 1px solid var(--divider);
+  border-radius: t.$radius-md;
+  font-size: 13px;
+  @include hoverable-surface;
+}
+
+.saveButton {
+  padding: 6px 16px;
+  border: 1px solid var(--accent);
+  border-radius: t.$radius-md;
+  color: var(--accent-deep);
+  font-size: 13px;
+  @include hoverable-surface;
+}

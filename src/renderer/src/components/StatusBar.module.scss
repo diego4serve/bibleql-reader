@@ -1,0 +1,28 @@
+@use "../styles/tokens" as t;
+
+.bar {
+  flex: 0 0 auto;
+  height: t.$statusbar-height;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 14px;
+  border-top: 1px solid var(--divider);
+  background: var(--surface);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.left {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.right {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,114 @@
+@use "tokens" as t;
+@use "theme";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: t.$font-body;
+  font-size: 15px;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: var(--accent-deep);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+
+  &:hover {
+    color: var(--accent);
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--sel);
+  color: var(--ink);
+}
+
+// Cross-cutting state-attribute rules used by many unrelated components —
+// kept global (matching the original) rather than duplicated per module.
+[data-active="true"] {
+  background: var(--sel);
+  border-color: var(--accent);
+}
+
+[data-tab="on"] {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+}
+
+[data-chev="open"] {
+  transform: rotate(90deg);
+}
+
+// Author styles (e.g. a CSS-module `.body { display: flex }`) otherwise win
+// over the UA stylesheet's default `[hidden] { display: none }`, silently
+// making the `hidden` attribute inert wherever a component also sets its
+// own `display`. Force it to actually hide.
+[hidden] {
+  display: none !important;
+}
+
+p[data-hl="on"] {
+  border-left: 2px solid var(--accent);
+  background: var(--sel);
+  margin-left: -14px;
+  padding: 2px 0 2px 12px;
+}
+
+@keyframes bq-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--faint);
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--divider);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}

@@ -1,0 +1,19 @@
+.wrap {
+  max-width: 34em;
+  margin: 0 auto;
+}
+
+.verse {
+  margin: 0 0 0.75em;
+  line-height: 1.72;
+  font-size: 17px;
+  text-wrap: pretty;
+}
+
+.verseNumber {
+  font-size: 10px;
+  color: var(--accent-deep);
+  font-variant-numeric: tabular-nums;
+  margin-right: 5px;
+  vertical-align: 0.55em;
+}

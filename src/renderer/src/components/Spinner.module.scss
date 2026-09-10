@@ -1,0 +1,9 @@
+.spinner {
+  display: block;
+  width: 34px;
+  height: 34px;
+  border: 2px solid var(--divider);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: bq-spin 780ms linear infinite;
+}

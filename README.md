@@ -13,23 +13,39 @@ An open-source desktop Bible reader built on the [BibleQL](https://github.com/lp
 
 Version 2 (server-side): bookmarks and reading plans.
 
-## Design
+## Stack
 
-The interface lives in `index.html` — open it in a browser to use it directly.
-Add a BibleQL API key (key icon in the title bar) to load real text; without one the reader
-shows a bundled public-domain sample chapter.
+Electron + React + TypeScript, built with [electron-vite](https://electron-vite.org). Server state
+(translations, passages, concordance, search) is managed with
+[TanStack Query](https://tanstack.com/query), navigation with
+[React Router](https://reactrouter.com) (hash-based, since the renderer loads from `file://` in
+production), and styling with Sass — a single token partial
+(`src/renderer/src/styles/_tokens.scss`) drives both the light and dark palettes as CSS custom
+properties, and every component has its own colocated `.module.scss`.
+
+```
+src/
+  main/       Electron main process (window setup, the AI IPC handler)
+  preload/    contextBridge — exposes window.desktop and window.ai to the renderer
+  renderer/   the React app (components/, queries/, hooks/, state/, lib/, data/, styles/)
+```
 
 ## Running as a desktop app
 
 ```bash
 npm install
-npm start
+npm run dev     # dev server + Electron, with HMR
+npm run build   # type-checks, then builds main/preload/renderer to out/
 ```
 
-Electron loads the same HTML in a frameless window. Requests go to `https://bibleql.org/graphql`
-with an `Authorization: Bearer` header; the key is stored locally and never committed.
+Requests go to `https://bibleql.org/graphql` with an `Authorization: Bearer` header. The AI
+assistant calls Claude via the [Vercel AI SDK](https://ai-sdk.dev) from the main process, so its
+API key never touches the renderer. Both keys are entered from the key dialog (key icon in the
+title bar) and stored locally — neither is ever committed or sent anywhere else. Without a BibleQL
+key, the reader shows a bundled public-domain sample chapter (Psalm 23).
 
-Get a key at https://bibleql.org/api-keys/request/new — see https://docs.bibleql.org.
+Get a BibleQL key at https://bibleql.org/api-keys/request/new (docs: https://docs.bibleql.org) and
+an Anthropic key at https://console.anthropic.com.
 
 ## License
 

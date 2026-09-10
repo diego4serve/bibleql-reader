@@ -1,0 +1,57 @@
+// Single source of truth for the color palette. _theme.scss compiles these
+// maps into CSS custom properties so the app can still switch themes at
+// runtime via the `data-theme` attribute — SCSS variables alone are
+// compile-time only and can't do that.
+$palette-light: (
+  bg: #f3f2f2,
+  surface: #eae9e9,
+  raise: #f8f4f4,
+  ink: #201f1d,
+  muted: #605d5d,
+  faint: #7d7979,
+  accent: #b68235,
+  accent-deep: #7d5411,
+  sel: #fff3e4,
+  divider: rgba(32, 31, 29, 0.16),
+  hair: rgba(32, 31, 29, 0.09),
+  shadow: 0 3px 10px rgba(45, 43, 43, 0.16),
+  shadow-lg: 0 12px 32px rgba(45, 43, 43, 0.22)
+);
+
+$palette-dark: (
+  bg: #171615,
+  surface: #201e1c,
+  raise: #262321,
+  ink: #ece8e3,
+  muted: #b3aca5,
+  faint: #8b847d,
+  accent: #d9ab68,
+  accent-deep: #e1ad66,
+  sel: #2f2820,
+  divider: rgba(236, 232, 227, 0.18),
+  hair: rgba(236, 232, 227, 0.09),
+  shadow: 0 3px 10px rgba(0, 0, 0, 0.45),
+  shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.55)
+);
+
+$font-heading: "Cormorant Garamond", Georgia, serif;
+$font-body: Lora, Georgia, serif;
+$font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+// Not theme-dependent — plain SCSS constants, used directly in component styles.
+$titlebar-height: 46px;
+$statusbar-height: 26px;
+$sidebar-width: 264px;
+$study-panel-width: clamp(300px, 26%, 372px);
+$radius-sm: 3px;
+$radius-md: 4px;
+
+// Responsive breakpoints, documented here but applied in JS (the collapsing
+// logic depends on more than viewport width alone) — see
+// src/renderer/src/hooks/useResponsiveLayout.ts, which must stay in sync
+// with these numbers.
+$bp-panel: 760px;
+$bp-sidebar-with-panel: 1180px;
+$bp-sidebar-no-panel: 820px;
+$bp-compare-with-panel: 1320px;
+$bp-compare-no-panel: 860px;

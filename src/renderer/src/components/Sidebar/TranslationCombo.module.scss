@@ -1,0 +1,42 @@
+@use "../../styles/mixins" as *;
+
+.wrap {
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid var(--divider);
+  border-radius: 4px;
+  background: var(--bg);
+  font-size: 13px;
+  outline: none;
+}
+
+.dropdown {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 4px);
+  z-index: 30;
+  max-height: 280px;
+  overflow-y: auto;
+  background: var(--raise);
+  border: 1px solid var(--divider);
+  border-radius: 4px;
+  box-shadow: var(--shadow);
+  padding: 4px;
+}
+
+.item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 5px 8px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  font-size: 13px;
+  line-height: 1.35;
+  @include hoverable-surface;
+}

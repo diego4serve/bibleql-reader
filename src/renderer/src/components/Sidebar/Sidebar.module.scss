@@ -1,0 +1,29 @@
+@use "../../styles/mixins" as *;
+@use "../../styles/tokens" as t;
+
+.sidebar {
+  flex: 0 0 t.$sidebar-width;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border-right: 1px solid var(--divider);
+  background: var(--surface);
+}
+
+.translationBlock {
+  padding: 12px 14px 10px;
+  border-bottom: 1px solid var(--hair);
+}
+
+.sectionTitle {
+  @include uppercase-label;
+  margin-bottom: 6px;
+}
+
+.secondCombo {
+  margin-top: 6px;
+}
+
+.filterBlock {
+  padding: 10px 14px 8px;
+}
