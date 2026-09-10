@@ -46,6 +46,7 @@
     "files": [
       "out/**/*"
     ],
+    "icon": "build/icon.png",
     "mac": {
       "target": [
         "dmg",
