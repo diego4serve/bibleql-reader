@@ -69,6 +69,11 @@
         "deb"
       ],
       "category": "Education"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "lporras",
+      "repo": "bibleql-reader"
     }
   }
 }
