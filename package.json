@@ -5,6 +5,10 @@
   "type": "module",
   "main": "./out/main/index.js",
   "license": "MIT",
+  "author": {
+    "name": "Luis Porras",
+    "email": "lporras16@gmail.com"
+  },
   "scripts": {
     "dev": "electron-vite dev",
     "start": "electron-vite dev",
