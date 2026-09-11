@@ -2,6 +2,7 @@ import { useMemo, useRef, type JSX } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useAppState } from "../../state/AppStateContext";
 import { usePassage } from "../../queries/usePassage";
+import { HAS_BIBLEQL_KEY } from "../../lib/graphql";
 import { useFocusVerse } from "../../hooks/useFocusVerse";
 import { bookLabel, stepChapter } from "../../lib/refs";
 import { STR } from "../../data/strings";
@@ -23,7 +24,7 @@ export function ReaderPane({ compareEff }: ReaderPaneProps): JSX.Element {
   const [searchParams] = useSearchParams();
   const fromVerse = searchParams.get("from") ? Number(searchParams.get("from")) : null;
   const toVerse = searchParams.get("to") ? Number(searchParams.get("to")) : fromVerse;
-  const noKey = !state.apiKey;
+  const noKey = !HAS_BIBLEQL_KEY;
 
   const passageA = usePassage("a", state.transA, bookId, chapter);
   const passageB = usePassage("b", state.transB, bookId, chapter, state.compare);

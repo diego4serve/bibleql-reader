@@ -58,7 +58,7 @@ export function TitleBar(): JSX.Element {
         <button type="button" className={styles.iconButton} title={t.theme} onClick={actions.toggleTheme}>
           {isDark ? <SunIcon /> : <MoonIcon />}
         </button>
-        <button type="button" className={styles.iconButton} title={t.apiKey} onClick={actions.openKeyDialog}>
+        <button type="button" className={styles.iconButton} title={t.aiApiKey} onClick={actions.openKeyDialog}>
           <KeyIcon />
         </button>
         {isWin && (

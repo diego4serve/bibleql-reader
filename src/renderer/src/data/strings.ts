@@ -23,7 +23,6 @@ export interface StringsShape {
   more: string;
   searchPlaceholder: string;
   go: string;
-  keyHelp: string;
   aiKeyHelp: string;
   cancel: string;
   save: string;
@@ -70,8 +69,6 @@ export const STR: Record<Locale, StringsShape> = {
     more: "Load more",
     searchPlaceholder: "Words or phrase",
     go: "Search",
-    keyHelp:
-      "Requests go straight to bibleql.org/graphql. The key is kept on this machine only. Request one at bibleql.org.",
     aiKeyHelp: "Used only for the Assistant tab. Sent straight to Anthropic from this machine, never stored elsewhere.",
     cancel: "Cancel",
     save: "Save",
@@ -116,8 +113,6 @@ export const STR: Record<Locale, StringsShape> = {
     more: "Cargar más",
     searchPlaceholder: "Palabras o frase",
     go: "Buscar",
-    keyHelp:
-      "Las consultas van directo a bibleql.org/graphql. La clave se guarda solo en este equipo. Solicítala en bibleql.org.",
     aiKeyHelp: "Se usa solo en la pestaña Asistente. Se envía directo a Anthropic desde este equipo, nunca se guarda en otro lugar.",
     cancel: "Cancelar",
     save: "Guardar",

@@ -8,33 +8,22 @@ export function KeyDialog(): JSX.Element {
   const { state, actions } = useAppState();
   const t = STR[state.locale];
   const queryClient = useQueryClient();
-  const [keyInput, setKeyInput] = useState(state.apiKey);
   const [aiKeyInput, setAiKeyInput] = useState(state.aiApiKey);
 
   useEffect(() => {
-    setKeyInput(state.apiKey);
     setAiKeyInput(state.aiApiKey);
-  }, [state.apiKey, state.aiApiKey]);
+  }, [state.aiApiKey]);
 
   function handleSave(): void {
-    actions.saveKeys(keyInput.trim(), aiKeyInput.trim());
+    actions.saveKeys(aiKeyInput.trim());
     // A changed key doesn't change any query's cache key, so nothing would
-    // otherwise refetch — force everything to reload against the new key(s).
+    // otherwise refetch — force everything to reload against the new key.
     void queryClient.invalidateQueries();
   }
 
   return (
     <div className={styles.backdrop}>
       <div className={styles.dialog}>
-        <div className={styles.sectionTitle}>{t.apiKey}</div>
-        <p className={styles.help}>{t.keyHelp}</p>
-        <input
-          className={styles.input}
-          value={keyInput}
-          onChange={(event) => setKeyInput(event.target.value)}
-          placeholder="bql_live_…"
-        />
-
         <div className={styles.sectionTitle}>{t.aiApiKey}</div>
         <p className={styles.help}>{t.aiKeyHelp}</p>
         <input

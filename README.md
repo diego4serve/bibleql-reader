@@ -34,15 +34,20 @@ src/
 
 ```bash
 npm install
-npm run dev     # dev server + Electron, with HMR
-npm run build   # type-checks, then builds main/preload/renderer to out/
+cp .env.example .env   # set BIBLEQL_API_KEY
+npm run dev            # dev server + Electron, with HMR
+npm run build          # type-checks, then builds main/preload/renderer to out/
 ```
 
-Requests go to `https://bibleql.org/graphql` with an `Authorization: Bearer` header. The AI
-assistant calls Claude via the [Vercel AI SDK](https://ai-sdk.dev) from the main process, so its
-API key never touches the renderer. Both keys are entered from the key dialog (key icon in the
-title bar) and stored locally — neither is ever committed or sent anywhere else. Without a BibleQL
-key, the reader shows a bundled public-domain sample chapter (Psalm 23).
+Requests go to `https://bibleql.org/graphql` with an `Authorization: Bearer` header. The BibleQL
+key comes from `BIBLEQL_API_KEY` in `.env` (loaded via `dotenv`) and is compiled into the app at
+build time — it's never entered by end users and never committed. Release builds get their key the
+same way, from a `BIBLEQL_API_KEY` GitHub Actions secret set on the workflow. Without a key, the
+reader shows a bundled public-domain sample chapter (Psalm 23).
+
+The AI assistant calls Claude via the [Vercel AI SDK](https://ai-sdk.dev) from the main process, so
+its API key never touches the renderer. That key is still entered per-user from the key dialog (key
+icon in the title bar) and stored locally — never committed or sent anywhere else.
 
 Get a BibleQL key at https://bibleql.org/api-keys/request/new (docs: https://docs.bibleql.org) and
 an Anthropic key at https://console.anthropic.com.

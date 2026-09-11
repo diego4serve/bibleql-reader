@@ -1,6 +1,5 @@
 import { useQuery, keepPreviousData, type UseQueryResult } from "@tanstack/react-query";
-import { useAppState } from "../state/AppStateContext";
-import { gqlRequest } from "../lib/graphql";
+import { gqlRequest, HAS_BIBLEQL_KEY } from "../lib/graphql";
 import { refFor } from "../lib/refs";
 import { queryKeys } from "./keys";
 import type { PassageResult } from "../types/bible";
@@ -12,8 +11,8 @@ interface PassageResponse {
 const QUERY =
   "query($t:String!,$r:String!){ passage(translation:$t, reference:$r){ reference translationName translationNote verses { verse text } } }";
 
-async function fetchPassage(apiKey: string, translationId: string, reference: string): Promise<PassageResult> {
-  const data = await gqlRequest<PassageResponse>(apiKey, QUERY, { t: translationId, r: reference });
+async function fetchPassage(translationId: string, reference: string): Promise<PassageResult> {
+  const data = await gqlRequest<PassageResponse>(QUERY, { t: translationId, r: reference });
   const p = data.passage;
   return {
     reference: p?.reference ?? reference,
@@ -35,11 +34,10 @@ export function usePassage(
   enabled: boolean = true
 ): UseQueryResult<PassageResult> {
   void slot;
-  const { state } = useAppState();
   return useQuery({
     queryKey: queryKeys.passage(translationId, bookId, chapter),
-    queryFn: () => fetchPassage(state.apiKey, translationId, refFor(translationId, bookId, chapter)),
-    enabled: enabled && !!state.apiKey && !!translationId && !!bookId,
+    queryFn: () => fetchPassage(translationId, refFor(translationId, bookId, chapter)),
+    enabled: enabled && HAS_BIBLEQL_KEY && !!translationId && !!bookId,
     staleTime: 5 * 60_000,
     placeholderData: keepPreviousData
   });

@@ -2,6 +2,7 @@ import { useState, type FormEvent, type JSX } from "react";
 import { useAppState } from "../../state/AppStateContext";
 import { useSearch } from "../../queries/useSearch";
 import { useOpenRef } from "../../hooks/useOpenRef";
+import { HAS_BIBLEQL_KEY } from "../../lib/graphql";
 import { STR } from "../../data/strings";
 import styles from "./SearchTab.module.scss";
 
@@ -26,7 +27,7 @@ export function SearchTab({ active }: SearchTabProps): JSX.Element {
     setQuery(q);
   }
 
-  const hasKey = !!state.apiKey;
+  const hasKey = HAS_BIBLEQL_KEY;
   let notice = "";
   if (!hasKey) notice = t.noKey;
   else if (!query) notice = t.searchIdle;
