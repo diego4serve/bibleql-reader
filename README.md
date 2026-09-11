@@ -52,6 +52,20 @@ icon in the title bar) and stored locally — never committed or sent anywhere e
 Get a BibleQL key at https://bibleql.org/api-keys/request/new (docs: https://docs.bibleql.org) and
 an Anthropic key at https://console.anthropic.com.
 
+## macOS: "is damaged and can't be opened"
+
+Release builds aren't code-signed/notarized yet, so macOS Gatekeeper blocks them after download
+with `"BibleQL Reader" is damaged and can't be opened. You should move it to the Trash.` This is a
+Gatekeeper quarantine issue, not an actual corrupt download. Workaround:
+
+```bash
+xattr -cr "/Applications/BibleQL Reader.app"
+```
+
+(adjust the path if you didn't install it to `/Applications`). This only fixes it for the copy you
+run it on — every user hitting a release build hits the same dialog until the mac build is signed
+with an Apple Developer ID and notarized in CI.
+
 ## License
 
 MIT. Bible texts keep their own licenses — each translation's `note` field carries it, and the
