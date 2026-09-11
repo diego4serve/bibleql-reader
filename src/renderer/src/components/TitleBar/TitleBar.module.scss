@@ -11,18 +11,14 @@
   border-bottom: 1px solid var(--divider);
   background: var(--surface);
   user-select: none;
+  -webkit-app-region: drag;
 }
 
-.trafficLights {
-  display: flex;
-  gap: 8px;
-  padding-right: 4px;
-}
-
-.trafficLight {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
+// Reserves space to the left of the wordmark for macOS's native inset
+// traffic lights, which Electron draws on top of the page.
+.trafficLightsSpacer {
+  flex: 0 0 auto;
+  width: 58px;
 }
 
 .wordmark {
@@ -59,6 +55,7 @@
   border: 1px solid var(--divider);
   border-radius: 4px;
   font-size: 12px;
+  -webkit-app-region: no-drag;
   @include hoverable-surface;
 }
 
@@ -77,25 +74,11 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
   font-variant-numeric: tabular-nums;
+  -webkit-app-region: no-drag;
   @include hoverable-surface;
 }
 
 .iconButton {
+  -webkit-app-region: no-drag;
   @include icon-button;
-}
-
-.winCaption {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  margin-left: 8px;
-  color: var(--muted);
-}
-
-.winButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 28px;
 }
