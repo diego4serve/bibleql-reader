@@ -3,6 +3,7 @@ import { useAppState } from "../../state/AppStateContext";
 import { useConcordanceSupport } from "../../queries/useConcordanceSupport";
 import { useConcordance } from "../../queries/useConcordance";
 import { useTranslations } from "../../queries/useTranslations";
+import { HAS_BIBLEQL_KEY } from "../../lib/graphql";
 import { useOpenRef } from "../../hooks/useOpenRef";
 import { fillTemplate, stripMarkContext } from "../../lib/format";
 import { STR } from "../../data/strings";
@@ -32,7 +33,7 @@ export function Concordance({ active }: ConcordanceProps): JSX.Element {
     setWord(w);
   }
 
-  const hasKey = !!state.apiKey;
+  const hasKey = HAS_BIBLEQL_KEY;
   let notice = "";
   if (!hasKey) {
     notice = t.noKey;

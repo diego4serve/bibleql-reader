@@ -13,7 +13,6 @@ export interface PersistedPrefs {
 }
 
 const PREFS_KEY = "biblereader.prefs";
-const API_KEY_KEY = "biblereader.apikey";
 const AI_KEY_KEY = "biblereader.aikey";
 
 export function readPrefs(): Partial<PersistedPrefs> {
@@ -32,22 +31,6 @@ export function writePrefs(patch: Partial<PersistedPrefs>): void {
     localStorage.setItem(PREFS_KEY, JSON.stringify({ ...current, ...patch }));
   } catch {
     // storage unavailable
-  }
-}
-
-export function readApiKey(): string {
-  try {
-    return localStorage.getItem(API_KEY_KEY) || "";
-  } catch {
-    return "";
-  }
-}
-
-export function writeApiKey(key: string): void {
-  try {
-    localStorage.setItem(API_KEY_KEY, key);
-  } catch {
-    // ignore
   }
 }
 

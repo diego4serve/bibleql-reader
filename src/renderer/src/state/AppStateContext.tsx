@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useReducer, type ReactNode } from "react";
 import type { Theme } from "../types/app";
 import type { Locale } from "../data/strings";
-import { readApiKey, readAiKey, readPrefs, writeApiKey, writeAiKey, writePrefs } from "./persist";
+import { readAiKey, readPrefs, writeAiKey, writePrefs } from "./persist";
 
 const DEFAULT_TRANS_A = "eng-web";
 const DEFAULT_TRANS_B = "spa-rv1909";
@@ -13,7 +13,6 @@ export interface AppState {
   panelOpen: boolean;
   transA: string;
   transB: string;
-  apiKey: string;
   aiApiKey: string;
   keyDialogOpen: boolean;
 }
@@ -25,7 +24,7 @@ type Action =
   | { type: "TOGGLE_PANEL" }
   | { type: "SET_TRANS_A"; id: string }
   | { type: "SET_TRANS_B"; id: string }
-  | { type: "SAVE_KEYS"; apiKey: string; aiApiKey: string }
+  | { type: "SAVE_KEYS"; aiApiKey: string }
   | { type: "OPEN_KEY_DIALOG" }
   | { type: "CLOSE_KEY_DIALOG" };
 
@@ -44,7 +43,7 @@ function reducer(state: AppState, action: Action): AppState {
     case "SET_TRANS_B":
       return { ...state, transB: action.id };
     case "SAVE_KEYS":
-      return { ...state, apiKey: action.apiKey, aiApiKey: action.aiApiKey, keyDialogOpen: false };
+      return { ...state, aiApiKey: action.aiApiKey, keyDialogOpen: false };
     case "OPEN_KEY_DIALOG":
       return { ...state, keyDialogOpen: true };
     case "CLOSE_KEY_DIALOG":
@@ -63,7 +62,6 @@ function init(): AppState {
     panelOpen: prefs.panelOpen ?? true,
     transA: prefs.transA ?? DEFAULT_TRANS_A,
     transB: prefs.transB ?? DEFAULT_TRANS_B,
-    apiKey: readApiKey(),
     aiApiKey: readAiKey(),
     keyDialogOpen: false
   };
@@ -76,7 +74,7 @@ export interface AppStateActions {
   togglePanel(): void;
   setTransA(id: string): void;
   setTransB(id: string): void;
-  saveKeys(apiKey: string, aiApiKey: string): void;
+  saveKeys(aiApiKey: string): void;
   openKeyDialog(): void;
   closeKeyDialog(): void;
 }
@@ -114,10 +112,9 @@ export function AppStateProvider({ children }: { children: ReactNode }): React.J
       togglePanel: () => dispatch({ type: "TOGGLE_PANEL" }),
       setTransA: (id: string) => dispatch({ type: "SET_TRANS_A", id }),
       setTransB: (id: string) => dispatch({ type: "SET_TRANS_B", id }),
-      saveKeys: (apiKey: string, aiApiKey: string) => {
-        writeApiKey(apiKey);
+      saveKeys: (aiApiKey: string) => {
         writeAiKey(aiApiKey);
-        dispatch({ type: "SAVE_KEYS", apiKey, aiApiKey });
+        dispatch({ type: "SAVE_KEYS", aiApiKey });
       },
       openKeyDialog: () => dispatch({ type: "OPEN_KEY_DIALOG" }),
       closeKeyDialog: () => dispatch({ type: "CLOSE_KEY_DIALOG" })

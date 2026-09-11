@@ -1,5 +1,6 @@
 import type { JSX } from "react";
 import { useAppState } from "../../state/AppStateContext";
+import { useOverlayInset } from "../../hooks/useOverlayInset";
 import { STR } from "../../data/strings";
 import { CompareIcon, KeyIcon, MoonIcon, StudyIcon, SunIcon } from "../icons";
 import { RefSearchForm } from "./RefSearchForm";
@@ -10,18 +11,18 @@ export function TitleBar(): JSX.Element {
   const t = STR[state.locale];
   const platform = window.desktop.platform;
   const isMac = platform === "darwin";
-  const isWin = platform === "win32";
   const isDark = state.theme === "dark";
+  // On Windows/Linux, Electron draws the real minimize/maximize/close
+  // buttons as an overlay on top of the page — reserve space so our own
+  // toolbar buttons don't render underneath them.
+  const overlayInset = useOverlayInset();
 
   return (
     <div className={styles.bar}>
-      {isMac && (
-        <div className={styles.trafficLights}>
-          <span className={styles.trafficLight} style={{ background: "#e8695e" }} />
-          <span className={styles.trafficLight} style={{ background: "#e0b040" }} />
-          <span className={styles.trafficLight} style={{ background: "#67bd52" }} />
-        </div>
-      )}
+      {/* macOS draws its own traffic lights inset over the window
+          (titleBarStyle: "hiddenInset") — this just reserves space so the
+          wordmark doesn't render underneath them. */}
+      {isMac && <div className={styles.trafficLightsSpacer} />}
 
       <div className={styles.wordmark}>
         <span className={styles.title}>Bible Reader</span>
@@ -30,7 +31,7 @@ export function TitleBar(): JSX.Element {
 
       <RefSearchForm />
 
-      <div className={styles.toolbar}>
+      <div className={styles.toolbar} style={isMac ? undefined : { marginRight: overlayInset }}>
         <button
           type="button"
           className={styles.toolButton}
@@ -58,18 +59,9 @@ export function TitleBar(): JSX.Element {
         <button type="button" className={styles.iconButton} title={t.theme} onClick={actions.toggleTheme}>
           {isDark ? <SunIcon /> : <MoonIcon />}
         </button>
-        <button type="button" className={styles.iconButton} title={t.apiKey} onClick={actions.openKeyDialog}>
+        <button type="button" className={styles.iconButton} title={t.aiApiKey} onClick={actions.openKeyDialog}>
           <KeyIcon />
         </button>
-        {isWin && (
-          <div className={styles.winCaption}>
-            <span className={styles.winButton}>–</span>
-            <span className={styles.winButton} style={{ fontSize: 11 }}>
-              ▢
-            </span>
-            <span className={styles.winButton}>✕</span>
-          </div>
-        )}
       </div>
     </div>
   );

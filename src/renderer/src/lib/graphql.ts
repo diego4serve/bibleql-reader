@@ -7,14 +7,15 @@ interface GraphQLResponse<T> {
   errors?: { message: string }[];
 }
 
+export const HAS_BIBLEQL_KEY = Boolean(__BIBLEQL_API_KEY__);
+
 export async function gqlRequest<T>(
-  apiKey: string,
   query: string,
   variables?: Record<string, unknown>,
   endpoint: string = DEFAULT_ENDPOINT
 ): Promise<T> {
   const headers: Record<string, string> = { "Content-Type": "application/json" };
-  if (apiKey) headers.Authorization = `Bearer ${apiKey}`;
+  if (__BIBLEQL_API_KEY__) headers.Authorization = `Bearer ${__BIBLEQL_API_KEY__}`;
 
   let res: Response;
   try {
